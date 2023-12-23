@@ -1,0 +1,8 @@
+prog
+test.c
+.vscode
+prog.dSYM
+.DS_Store
+NFA/prog.dSYM
+NFA/.DS_Store
+DataStructures/.DS_Store
