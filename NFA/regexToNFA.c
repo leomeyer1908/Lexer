@@ -32,11 +32,11 @@ static void makeNFAFromChar(NFA* nfa, char c) {
 
 
 	startNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-	initHashMap(startNode->transitions, 2);
+	initHashMap(startNode->transitions, 2, NULL, NULL);
 	addTransitionNFANode(startNode, c, acceptNode);
 
 	acceptNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-	initHashMap(acceptNode->transitions, 2);
+	initHashMap(acceptNode->transitions, 2, NULL, NULL);
 
 	nfa->startState = startNode;
 
@@ -60,12 +60,12 @@ static void makeNFAFromOperator(NFA* nfa, char op, NFA* nfa1, NFA* nfa2) {
 
 
 		startNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-		initHashMap(startNode->transitions, 2);
+		initHashMap(startNode->transitions, 2, NULL, NULL);
 		addTransitionNFANode(startNode, EPSILON, nfa1->startState);
 		addTransitionNFANode(startNode, EPSILON, nfa2->startState);
 
 		acceptNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-		initHashMap(acceptNode->transitions, 2);
+		initHashMap(acceptNode->transitions, 2, NULL, NULL);
 
 		NFANode* nfa1AcceptState = nfa1->NFANodes[nfa1->nodeNum-1];
 		NFANode* nfa2AcceptState = nfa2->NFANodes[nfa2->nodeNum-1];
@@ -112,12 +112,12 @@ static void makeNFAFromOperator(NFA* nfa, char op, NFA* nfa1, NFA* nfa2) {
 		acceptNode->is_accept = 1;
 
 		startNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-		initHashMap(startNode->transitions, 2);
+		initHashMap(startNode->transitions, 2, NULL, NULL);
 		addTransitionNFANode(startNode, EPSILON, nfa1->startState);
 		addTransitionNFANode(startNode, EPSILON, acceptNode);
 
 		acceptNode->transitions = (HashMap*) malloc(sizeof(HashMap));
-		initHashMap(acceptNode->transitions, 2);
+		initHashMap(acceptNode->transitions, 2, NULL, NULL);
 		addTransitionNFANode(acceptNode, EPSILON, startNode);
 
 		NFANode* nfa1AcceptState = nfa1->NFANodes[nfa1->nodeNum-1];
