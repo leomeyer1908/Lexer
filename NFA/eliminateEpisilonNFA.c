@@ -94,8 +94,8 @@ static void eliminateEpisilonNFANode(NFANode* currentNFANode, HashSet* nfaNodesV
 			DoublyNode* nextNode = node->next;
 			NFANode* destinationNode = (NFANode*) node->value;
 			if (destinationNode == currentNFANode) {
-				removeNodeFromList(episilonTransitions, node);
-				removeElementHashSet(uniqueEpisilonTransitions, node->value);
+				removeElementHashSet(uniqueEpisilonTransitions, (void*) node->value);
+				removeNodeFromList(episilonTransitions, (void*) node);
 			}
 			else if (!containsHashSet(nfaNodesVisited, (void*) destinationNode)) {
 				eliminateEpisilonNFANode(destinationNode, nfaNodesVisited, nfaNodesReferenced, transitionTable);
@@ -103,8 +103,8 @@ static void eliminateEpisilonNFANode(NFANode* currentNFANode, HashSet* nfaNodesV
 				if (destinationNode->is_accept) {
 					currentNFANode->is_accept = 1;
 				}
+				removeElementHashSet(uniqueEpisilonTransitions, (void*) node->value);
 				removeNodeFromList(episilonTransitions, (void*) node);
-				removeElementHashSet(uniqueEpisilonTransitions, node->value);
 			}		
 			node = nextNode;
 		}

@@ -22,6 +22,9 @@ void initHashMap(HashMap* map, size_t initialCapacity, HashFunc hashFunc, CmpFun
 }
 
 void insertHashMap(HashMap* map, void* key, void* value) {
+    if (map->array == NULL) {
+        return;
+    }
     if (containsHashMap(map, key)) {
         updateHashMap(map, key, value);
         return;
@@ -62,6 +65,9 @@ void insertHashMap(HashMap* map, void* key, void* value) {
 }
 
 int updateHashMap(HashMap* map, void* key, void* value) {
+    if (map->array == NULL) {
+        return -1;
+    }
     size_t index = map->hashFunc((const void*) key, (const size_t) map->capacity);
     for (DoublyNode* currentNode = map->array[index].head; currentNode != NULL; currentNode = currentNode->next) {
         const void* currentKey = (const void*) ((KeyValuePair*) ((DoublyNode*) currentNode->value)->value)->key;
@@ -74,6 +80,9 @@ int updateHashMap(HashMap* map, void* key, void* value) {
 }
 
 int containsHashMap(HashMap* map, void* key) {
+    if (map->array == NULL) {
+        return 0;
+    }
     size_t index = map->hashFunc((const void*) key, (const size_t) map->capacity);
     for (DoublyNode* currentNode = map->array[index].head; currentNode != NULL; currentNode = currentNode->next) {
         const void* currentKey = (const void*) ((KeyValuePair*) ((DoublyNode*) currentNode->value)->value)->key;
@@ -85,6 +94,9 @@ int containsHashMap(HashMap* map, void* key) {
 }
 
 void* getHashMap(HashMap* map, void* key) {
+    if (map->array == NULL) {
+        return NULL;
+    }
     size_t index = map->hashFunc((const void*) key, (const size_t) map->capacity);
     for (DoublyNode* currentNode = map->array[index].head; currentNode != NULL; currentNode = currentNode->next) {
         const void* currentKey = (const void*) ((KeyValuePair*) ((DoublyNode*) currentNode->value)->value)->key;
@@ -120,6 +132,7 @@ void destroyHashMap(HashMap* map) {
     for (DoublyNode* currentNode = map->keyValuePairs.head; currentNode != NULL; currentNode = currentNode->next) {
         free((KeyValuePair*) currentNode->value);
     }
+    map->array = NULL;
     destroyList(&map->keyValuePairs);
     map->capacity = 0;
     map->size = 0;

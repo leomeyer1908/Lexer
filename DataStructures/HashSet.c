@@ -22,7 +22,7 @@ void initHashSet(HashSet* set, size_t initialCapacity, HashFunc hashFunc, CmpFun
 }
 
 void insertHashSet(HashSet* set, void* key) {
-    if (containsHashSet(set, key)) {
+    if (containsHashSet(set, key) || set->array == NULL) {
         return;
     }
     double load_factor = (double) set->size/set->capacity;
@@ -55,6 +55,9 @@ void insertHashSet(HashSet* set, void* key) {
 }
 
 int containsHashSet(HashSet* set, void* key) {
+    if (set->array == NULL) {
+        return 0;
+    }
     size_t index = set->hashFunc((const void*) key, (const size_t) set->capacity);
     for (DoublyNode* currentNode = set->array[index].head; currentNode != NULL; currentNode = currentNode->next) {
         if (set->cmpFunc((const void*) ((DoublyNode*) currentNode->value)->value, (const void*) key)) {
@@ -84,6 +87,7 @@ void destroyHashSet(HashSet* set) {
         destroyList(&set->array[i]);
     }
     free(set->array);
+    set->array = NULL;
     destroyList(&set->keys);
     set->capacity = 0;
     set->size = 0;
@@ -92,15 +96,10 @@ void destroyHashSet(HashSet* set) {
 }
 
 void copyHashSet(HashSet* srcSet, HashSet* dstSet) {
-	dstSet->size = srcSet->size;
-	dstSet->capacity = srcSet->capacity;
-	dstSet->array = (LinkedList*) malloc(srcSet->capacity*sizeof(LinkedList));
-	for (size_t i = 0; i < srcSet->capacity; i++) {
-		copyList(&srcSet->array[i], &dstSet->array[i]);
-	}
-	copyList(&srcSet->keys, &dstSet->keys);
-    dstSet->hashFunc = srcSet->hashFunc;
-    dstSet->cmpFunc = srcSet->cmpFunc;
+    initHashSet(dstSet, srcSet->capacity, srcSet->hashFunc, srcSet->cmpFunc);
+    for (DoublyNode* node = srcSet->keys.head; node != NULL; node = node->next) {
+        insertHashSet(dstSet, node->value);
+    }
 }
 
 void getSetFromList(LinkedList* list, HashSet* set) {
