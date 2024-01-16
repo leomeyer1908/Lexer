@@ -96,7 +96,7 @@ static int tokenizeInputUsingDFAs(char* input, LinkedList* dfas, LinkedList* tok
             strcpy(newToken->tokenName, (const char*) dfaWithMaxCharsConsumed->tokenName);
             newToken->colNum = currentColNum;
             newToken->lineNum = currentLineNum;
-            newToken->value = (char*) malloc(maxCharsConsumed*sizeof(char));
+            newToken->value = (char*) malloc((maxCharsConsumed+1)*sizeof(char));
 
             i = i-lettersConsumed;
             for (int j = 0; j < maxCharsConsumed; j++) {
@@ -110,6 +110,7 @@ static int tokenizeInputUsingDFAs(char* input, LinkedList* dfas, LinkedList* tok
                 i++;
             }
             i--;
+            newToken->value[maxCharsConsumed] = '\0';
 
             pushBackList(tokens, (void*) newToken);
 
