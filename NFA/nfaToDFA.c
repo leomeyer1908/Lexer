@@ -140,7 +140,7 @@ void createDFAFromNFA(const NFA* nfa, NFA* dfa) {
     }
 
     dfa->nodeNum = newNodeCombinations.size;
-    dfa->NFANodes = (NFANode**) malloc(nfa->nodeNum*sizeof(NFANode*));
+    dfa->NFANodes = (NFANode**) malloc(dfa->nodeNum*sizeof(NFANode*));
     size_t currentNodeIndex = 0;
     for(DoublyNode* node = newNodeCombinations.head; node != NULL; node = node->next) {
         dfa->NFANodes[currentNodeIndex] = (NFANode*) getHashMap(&nfaToDFANodes, node->value);
