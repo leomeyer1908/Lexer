@@ -103,7 +103,7 @@ static int tokenizeInputUsingDFAs(char* input, LinkedList* dfas, LinkedList* tok
                 newToken->value[j] = input[i];
                 if (input[i] == '\n') {
                     currentLineNum++;
-                    currentColNum = 0;
+                    currentColNum = 1;
                 } else {
                     currentColNum++;
                 }
