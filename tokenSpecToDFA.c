@@ -125,6 +125,7 @@ char* getSimpleRegexFromComplexRegex(char* complexRegex) {
             pushBackList(&simpleRegexChars, (void*) (uintptr_t) '(');
             i++;
             if (complexRegex[i] == '^') {
+                i++;
                 HashSet lettersInBracket;
                 initHashSet(&lettersInBracket, 2, NULL, NULL);
                 while (complexRegex[i] != ']') {
