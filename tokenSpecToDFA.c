@@ -160,6 +160,7 @@ char* getSimpleRegexFromComplexRegex(char* complexRegex) {
                         }
                     }
                 }
+                destroyHashSet(&lettersInBracket);
             } 
             else {
                 while (complexRegex[i] != ']') {
@@ -216,6 +217,8 @@ char* getSimpleRegexFromComplexRegex(char* complexRegex) {
         simpleRegex[i++] = currentChar;
     }
     simpleRegex[i] = '\0';
+
+    destroyList(&simpleRegexChars);
 
     return simpleRegex;
 }

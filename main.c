@@ -74,6 +74,7 @@ int main(int argc, char** argv) {
         }
     }
 
+    destroyList(&tokens);
     free(tokenSpec);
     free(input);
 

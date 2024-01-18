@@ -37,6 +37,7 @@ int makeDFAFromRegex(char* regex, DFA* dfa) {
         char currentTransitionChar = (char) (uintptr_t) node->value; 
         dfa->alphabet[i++] = currentTransitionChar;
     }
+    destroyHashSet(&alphabet);
 
     dfa->startState = (size_t) getHashMap(&nodeToIndexMap, (void*) dfaNFA.startState);
 
@@ -65,6 +66,7 @@ int makeDFAFromRegex(char* regex, DFA* dfa) {
 
 
     destroyNFA(&dfaNFA);
+    destroyHashMap(&nodeToIndexMap);
     return 0;
 }
 
