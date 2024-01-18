@@ -74,6 +74,11 @@ int main(int argc, char** argv) {
         }
     }
 
+    for (DoublyNode* node = tokens.head; node != NULL; node = node->next) {
+        Token* currentToken = (Token*) node->value;
+        free(currentToken);
+    } 
+
     destroyList(&tokens);
     free(tokenSpec);
     free(input);
