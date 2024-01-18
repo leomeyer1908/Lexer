@@ -44,12 +44,17 @@ char* getFileText(const char* filename) {
     return buffer;
 }
 
-int main() {
-    char* tokenSpec = getFileText("tests/regexs/c_tokens.regex");
+int main(int argc, char** argv) {
+    if (argc != 3) {
+        printf("usage: <token spec> <input>\n");
+        return 1;
+    }
+
+    char* tokenSpec = getFileText(argv[1]);
     if (tokenSpec == NULL) {
         return 1;
     }
-    char* input = getFileText("tests/test.test");
+    char* input = getFileText(argv[2]);
     if (input == NULL) {
         return 1;
     }
